@@ -3,16 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-"scripts": {
-  "start": "node dist/server.js",
-  "build": "tsc -p .",
-  "dev": "nodemon src/server.ts"
-},
+  "scripts": {
+    "start": "node dist/server.js",
+    "build": "tsc -p .",
+    "dev": "nodemon src/server.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^5.2.1"
   },
   "devDependencies": {
