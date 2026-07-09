@@ -16,7 +16,7 @@ app.use(express.json());
 
 // Basic route
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello, TypeScript + Express!');
+  res.send('Hello, TypeScript + Express! ye');
 });
 
 // Start the server

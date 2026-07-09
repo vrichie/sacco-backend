@@ -50,3 +50,5 @@ Thumbs.db
 .vscode/
 # Uncomment the line below if you want to keep shared VS Code settings
 # !.vscode/settings.json
+
+/generated/prisma
