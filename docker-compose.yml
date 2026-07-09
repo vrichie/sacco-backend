@@ -1,0 +1,45 @@
+services:
+  app:
+    build: .
+    container_name: sacco-backend-app
+    ports:
+      - "${PORT}:${PORT}"
+    env_file:
+      - .env
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - node_modules/
+            - dist/
+        - action: rebuild
+          path: package.json
+
+
+    depends_on:
+      - postgres
+
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  postgres:
+    image: postgres:15.18-trixie
+
+    container_name: postgres-db
+
+    restart: always
+
+    env_file:
+      - .env
+
+    ports:
+      - "${POSTGRES_PORT}:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
