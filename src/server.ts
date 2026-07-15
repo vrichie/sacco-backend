@@ -1,5 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv"
+import userRoutes from "./routes/user.routes"
 
 dotenv.config()
 
@@ -16,8 +17,13 @@ app.use(express.json());
 
 // Basic route
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello, TypeScript + Express! ye');
+  res.send('Hello, world!!');
 });
+
+
+app.use("/api/v1/users",userRoutes)
+
+
 
 // Start the server
 app.listen(port, () => {
