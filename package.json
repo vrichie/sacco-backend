@@ -2,10 +2,10 @@
   "name": "sacco-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/server.js",
   "scripts": {
     "start": "node dist/server.js",
-    "build": "tsc -p .",
+    "build": "tsc -p . --outDir dist",
     "dev": "nodemon src/server.ts"
   },
   "keywords": [],
@@ -28,3 +28,4 @@
     "typescript": "^6.0.3"
   }
 }
+
