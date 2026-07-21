@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv"
 import userRoutes from "./routes/user.routes"
+import authRoutes from "./routes/auth.routes"
 
 dotenv.config()
 
@@ -22,6 +23,7 @@ app.get('/', (req: Request, res: Response) => {
 
 
 app.use("/api/v1/users",userRoutes)
+app.use("/api/v1/auth",authRoutes)
 
 
 

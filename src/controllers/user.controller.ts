@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 import * as userService  from "../services/user.service"
 import { CreateUser } from "../types";
+import bcrypt from "bcrypt";
 
 export const createUser = async (req:Request,res:Response)=>{
 try {
-    const {email,firstName,lastName,phone} = req.body;
-    
-    const user= await userService.createUser({firstName,email,lastName,phone})
+    const {email,firstName,lastName,phone, password} = req.body;
+    const hashedPassword = await bcrypt.hash(password,10)
+    const user= await userService.createUser({firstName,email,lastName,phone,password:hashedPassword})
     res.status(201).json({data:user,message:"User created successfully"})
 
 } catch (error) {
