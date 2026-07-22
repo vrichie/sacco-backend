@@ -6,6 +6,11 @@ import bcrypt from "bcrypt"
 export const register=async(req:Request,res:Response)=>{
 try {
     const {email,firstName,lastName,phone, password} = req.body;
+    // check if email is taken
+    const isEmailTaken = await userService.getUserByEmail(email);
+    if(isEmailTaken){
+        return res.status(400).json({message:"Email is already taken",data:null})
+    }
     const user= await authService.register({firstName,email,lastName,phone,password})
     res.status(201).json({data:user,message:"Account created successfully"})
 

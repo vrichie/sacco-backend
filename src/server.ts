@@ -1,5 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv"
+import cors from "cors"
 import userRoutes from "./routes/user.routes"
 import authRoutes from "./routes/auth.routes"
 
@@ -12,6 +13,11 @@ const port = process.env.PORT || 5000; // The port your express server will be r
 
 // Enable URL-encoded form data parsing
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cors({
+  origin:"http://localhost:3000",
+  credentials:true
+}))
 
 // Middleware to parse JSON bodies
 app.use(express.json());
