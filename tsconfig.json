@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "module": "commonjs",                                
-    "rootDir": "./src",
-    "outDir": "./dist",  
-    "moduleResolution": "node", 
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
+  "include": ["src/**/*", "lib/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
