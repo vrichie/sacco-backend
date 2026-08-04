@@ -8,22 +8,38 @@ try {
     const {email,firstName,lastName,phone, password} = req.body;
     const hashedPassword = await bcrypt.hash(password,10)
     const user= await userService.createUser({firstName,email,lastName,phone,password:hashedPassword})
-    res.status(201).json({data:user,message:"User created successfully"})
+    res.status(201).json({
+        success:true,
+        data:{user},
+        message:"User created successfully"
+    })
 
 } catch (error) {
     console.log(error)
-    res.status(500).json({message:"Something went wrong, failed to create user",error})
+     res.status(500).json({
+            success:false,
+            data:{error},
+            message:"Something went wrong, failed to create user"
+        })
 }
 }
 
 export const getUsers = async(req:Request,res:Response) => {
     try {
     const users= await userService.getAllUsers();
-    res.status(200).json(users)
+    res.status(200).json({
+        success:true,
+        data:{users},
+        message:'Users found'
+    })
 
     } catch (error) {
         console.log(error)
-        res.status(500).json({message:"Something went wrong, failed to get users",error})
+         res.status(500).json({
+            success:false,
+            data:{error},
+            message:"Something went wrong, failed to get user"
+        })
     }
 }
 export const getUserByEmail = async(req:Request,res:Response) => {
@@ -31,14 +47,26 @@ export const getUserByEmail = async(req:Request,res:Response) => {
         const email= req.params.email as string
 
         if(!email || email.length<4){
-            return res.status(400).json({message:"Check the email"})
+            return res.status(400).json({
+                success:false,
+                data:null,
+                message:"Check the email"
+            })
         }
         const user = await userService.getUserByEmail(email);
-        res.status(200).json({data:user,message:"User found"})
+        res.status(200).json({
+            success:true,
+            data:{user},
+            message:"User found"
+        })
 
     } catch (error) {
         console.log(error)
-        res.status(500).json({message:"Something went wrong, User not found",error})
+         res.status(500).json({
+            success:false,
+            data:{error},
+            message:"Something went wrong, User not found"
+        })
     }
 }
 
@@ -47,14 +75,26 @@ export const getUserById = async(req:Request,res:Response) => {
         const id= Number(req.params.id)
 
         if(id<0){
-            return res.status(400).json({message:"Check the id"})
+            return res.status(400).json({
+                success:false,
+                data:null,
+                message:"Check the id"
+            })
         }
         const user = await userService.getUserById(id);
-        res.status(200).json({data:user,message:"User found"})
+        res.status(200).json({
+            success:true,
+            data:{user},
+            message:"User found"
+        })
 
     } catch (error) {
         console.log(error)
-        res.status(500).json({message:"Something went wrong, User not found",error})
+        res.status(500).json({
+            success:false,
+            data:{error},
+            message:"Something went wrong, failed to get user"
+        })
     }
 }
 
@@ -65,12 +105,20 @@ export const updateUser = async(req:Request,res:Response) =>{
 
         const user = await userService.updateUser(id,data);
 
-        res.status(200).json({data:user,message:"User updated successfully"})
+        res.status(200).json({
+            success:true,
+            data:{user},
+            message:"User updated successfully"
+        })
 
 
     } catch (error) {
         console.log(error)
-        res.status(500).json({message:"Something went wrong, User not updated",error})
+         res.status(500).json({
+            success:false,
+            data:{error},
+            message:"Something went wrong, failed to get user"
+        })
     }
 }
 
@@ -80,11 +128,19 @@ export const deleteUser = async(req:Request,res:Response)=>{
 
         const user = await userService.deleteUser(id)
 
-        res.status(204).json({data:user,message:"User deleted successfully"})
+        res.status(204).json({
+            success:true,
+            data:{user},
+            message:"User deleted successfully"
+        })
        
 
     } catch (error) {
         console.log(error)
-        res.status(500).json({message:"Something went wrong, User not deleted",error})
+         res.status(500).json({
+            success:false,
+            data:{error},
+            message:"Something went wrong, failed to delete user"
+        })
     }
 }
