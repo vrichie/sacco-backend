@@ -17,7 +17,7 @@ try {
         })
     }
     const user= await authService.register({firstName,email,lastName,phone,password})
-    const token= jwt.sign({id:user.id,email:user.email},process.env.JWT_SECRET!,{
+    const token= jwt.sign({id:user.id,email:user.email,role:user.role},process.env.JWT_SECRET!,{
         expiresIn:"1h"
     })
     res.status(201).json({
@@ -48,7 +48,6 @@ export const login=async(req:Request,res:Response)=>{
                 message:"User not found"
             })
         }
-
         const validPassword= await bcrypt.compare(password,userExist.password)
         if(!validPassword){
             return res.status(400).json({
@@ -57,7 +56,7 @@ export const login=async(req:Request,res:Response)=>{
                 message:"Wrong password"
             })
         }
-        const token= jwt.sign({id:userExist.id,email:userExist.email},process.env.JWT_SECRET!,{
+        const token= jwt.sign({id:userExist.id,email:userExist.email,role:userExist.role},process.env.JWT_SECRET!,{
         expiresIn:"1h"
          })
 

@@ -2,12 +2,21 @@ import { Request, Response } from "express";
 import * as userService  from "../services/user.service"
 import { CreateUser } from "../types";
 import bcrypt from "bcrypt";
+import { UserRole } from "../../generated/prisma/enums";
 
 export const createUser = async (req:Request,res:Response)=>{
 try {
-    const {email,firstName,lastName,phone, password} = req.body;
+    const {email,firstName,lastName,phone, password,role} = req.body;
+    if(role && role!==UserRole.ADMIN && role!==UserRole.MEMBER){
+            res.status(400).json({
+            success:false,
+            data:{role},
+            message:"Role " +role + " does not exist"
+            })
+    }
+
     const hashedPassword = await bcrypt.hash(password,10)
-    const user= await userService.createUser({firstName,email,lastName,phone,password:hashedPassword})
+    const user= await userService.createUser({firstName,email,lastName,phone,password:hashedPassword,role})
     res.status(201).json({
         success:true,
         data:{user},
@@ -24,12 +33,12 @@ try {
 }
 }
 
-export const getUsers = async(req:Request,res:Response) => {
+export const getUsers = async(req:any,res:Response) => {
     try {
     const users= await userService.getAllUsers();
     res.status(200).json({
         success:true,
-        data:{users},
+        data:{users,user:req.user},
         message:'Users found'
     })
 

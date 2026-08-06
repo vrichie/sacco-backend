@@ -4,4 +4,5 @@ export type CreateUser ={
     lastName:string;
     phone?:string;
     password:string;
+    role?: "ADMIN" | "MEMBER"
 }
